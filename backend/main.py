@@ -109,24 +109,50 @@ def analyze_sentiment(news_list):
         vs = analyzer.polarity_scores(item["title"])
         compound = vs["compound"]
         
-        # Apply market-specific adjustments
-        # Fear Bias: Market usually reacts 2x harder to bad news than good news
-        if compound < 0:
-            amplified = compound * 1.8
-        else:
-            amplified = compound * 1.2  # Slight amplification for positive news
+        # Financial keyword adjustments for more accurate sentiment
+        title_lower = item["title"].lower()
         
-        scores.append(max(-1, min(1, amplified)))
+        # Strong negative financial keywords
+        negative_keywords = ['fall', 'drop', 'crash', 'plunge', 'slump', 'decline', 'loss', 'sell-off', 'bearish', 'fraud', 'scandal', 'investigation', 'debt', 'bankruptcy']
+        # Strong positive financial keywords  
+        positive_keywords = ['surge', 'rally', 'jump', 'soar', 'bullish', 'profit', 'gain', 'dividend', 'buyback', 'merger', 'acquisition', 'growth', 'beat', 'record']
+        
+        # Apply keyword weighting
+        keyword_adjustment = 0
+        for keyword in negative_keywords:
+            if keyword in title_lower:
+                keyword_adjustment -= 0.15
+        for keyword in positive_keywords:
+            if keyword in title_lower:
+                keyword_adjustment += 0.10
+        
+        # Apply market-specific adjustments
+        # Fear Bias: Market reacts 2-3x harder to bad news than good news (financial psychology)
+        if compound < 0:
+            amplified = compound * 2.2  # Stronger fear amplification
+        else:
+            amplified = compound * 1.1  # Minimal positive amplification
+        
+        # Add keyword adjustment
+        final_score = amplified + keyword_adjustment
+        
+        scores.append(max(-1, min(1, final_score)))
 
     avg_score = sum(scores) / len(scores)
 
-    # VADER thresholds (more sensitive than TextBlob)
-    if avg_score > 0.05:
+    # VADER thresholds (stricter for financial sentiment analysis)
+    if avg_score > 0.15:
         label = "Bullish"
-        detail = "Market narrative is optimistic with accumulation signals."
-    elif avg_score < -0.05:
+        detail = "Strong positive sentiment with clear accumulation signals."
+    elif avg_score < -0.15:
         label = "Bearish"
-        detail = "News cycle dominated by cautionary sentiment. Selling pressure detected."
+        detail = "Significant negative sentiment. Distribution pressure detected."
+    elif avg_score > 0.05:
+        label = "Slightly Bullish"
+        detail = "Mildly positive sentiment with cautious optimism."
+    elif avg_score < -0.05:
+        label = "Slightly Bearish"
+        detail = "Mildly negative sentiment with some caution."
     else:
         label = "Neutral"
         detail = "Mixed news flow. No strong directional bias detected."

@@ -1,36 +1,14 @@
 import { useSettings } from '../../context/SettingsContext';
 import { motion } from 'framer-motion';
-import { Shield, User, Palette, CloudRain } from 'lucide-react';
+import { Shield, Palette, CloudRain } from 'lucide-react';
 
 export function SettingsView() {
   const { 
-      chartStyle, isPrivacyMode, refreshInterval, accentColor, userName, avatarSeed,
-      toggleChartStyle, togglePrivacyMode, setRefreshInterval, setAccentColor, setUserName, setAvatarSeed, clearAllData 
+      isPrivacyMode, refreshInterval, accentColor,
+      togglePrivacyMode, setRefreshInterval, setAccentColor, clearAllData 
   } = useSettings();
 
   const sections: any[] = [
-    {
-      title: 'Profile & Identity',
-      icon: User,
-      items: [
-        {
-          id: 'name',
-          name: 'Display Name',
-          description: 'Customize how you are addressed in the sidebar.',
-          value: userName,
-          type: 'input',
-          onChange: (e: any) => setUserName(e.target.value)
-        },
-        {
-          id: 'avatar',
-          name: 'Avatar Seed',
-          description: 'Change the seed to generate a new unique avatar.',
-          value: avatarSeed,
-          type: 'input',
-          onChange: (e: any) => setAvatarSeed(e.target.value)
-        }
-      ]
-    },
     {
       title: 'Appearance',
       icon: Palette,
@@ -51,14 +29,6 @@ export function SettingsView() {
           type: 'select',
           options: ['blue', 'purple', 'gold', 'mint'],
           action: (val: any) => setAccentColor(val)
-        },
-        {
-            id: 'chartStyle',
-            name: 'Chart Visualization',
-            description: 'Switch between sleek glow areas or clinical line strokes.',
-            value: chartStyle === 'glow' ? 'Glow Area' : 'Line Stroke',
-            type: 'toggle',
-            action: toggleChartStyle,
         }
       ]
     },

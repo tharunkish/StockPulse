@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getIndices, getMarketStatus, MarketStatus, IndexData, searchTicker } from '../services/api';
-import { Loader2, Search, Clock, Activity } from 'lucide-react';
+import { Loader2, Search, Clock } from 'lucide-react';
 import { formatCompactINR } from '../lib/utils';
-import { useSettings } from '../context/SettingsContext';
 import { useDebounce } from '../hooks/useDebounce';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -14,7 +13,6 @@ export function Header({ onSelectStock }: HeaderProps) {
   const [indices, setIndices] = useState<IndexData[]>([]);
   const [status, setStatus] = useState<MarketStatus | null>(null);
   const [loading, setLoading] = useState(true);
-  const { chartStyle, toggleChartStyle } = useSettings();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -135,23 +133,6 @@ export function Header({ onSelectStock }: HeaderProps) {
                  </div>
              </div>
          )}
-         
-         <div className="flex items-center gap-4">
-             <button 
-                onClick={toggleChartStyle}
-                className="p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-white transition-all border border-white/5 relative group"
-             >
-                 <Activity className="h-5 w-5" />
-                 <div className="absolute -bottom-12 right-0 bg-black border border-white/10 px-3 py-1.5 text-[10px] font-bold rounded-xl opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none transition-all transform translate-y-2 group-hover:translate-y-0 shadow-2xl">
-                     {chartStyle === 'glow' ? 'Switch to Lines' : 'Switch to Glow'}
-                 </div>
-             </button>
-             <div className="h-10 w-10 rounded-2xl bg-gradient-to-tr from-ios-blue to-ios-purple p-[2px] shadow-lg">
-                <div className="h-full w-full rounded-[14px] bg-black flex items-center justify-center text-[10px] font-black text-white">
-                    IP
-                </div>
-             </div>
-         </div>
       </div>
     </header>
   );

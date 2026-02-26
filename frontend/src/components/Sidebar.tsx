@@ -1,4 +1,4 @@
-import { LayoutDashboard, Wallet, PieChart, Settings, TrendingUp, ChevronRight } from 'lucide-react';
+import { LayoutDashboard, Wallet, PieChart, Settings, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useSettings } from '../context/SettingsContext';
 
@@ -8,7 +8,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
-  const { sidebarBehavior, toggleSidebarBehavior, userName, avatarSeed } = useSettings();
+  const { sidebarBehavior } = useSettings();
   const isExpanded = sidebarBehavior === 'expanded';
 
   const links = [
@@ -38,13 +38,6 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
             <h1 className="text-xl font-black tracking-tighter text-white font-sf">StockPulse</h1>
             <p className="text-[10px] text-muted-foreground font-black uppercase tracking-[0.3em] opacity-50">PRO TERMINAL</p>
         </motion.div>
-        
-        <button 
-            onClick={toggleSidebarBehavior}
-            className="absolute -right-3 top-1/2 -translate-y-1/2 h-6 w-6 rounded-full bg-white/10 hover:bg-ios-blue border border-white/10 flex items-center justify-center text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all z-10 hover:scale-125"
-        >
-            <ChevronRight className={`h-3 w-3 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-        </button>
       </div>
 
       {/* Navigation */}
@@ -82,23 +75,6 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
           );
         })}
       </nav>
-
-      {/* Footer / Account */}
-      <div className="p-6">
-         <div className={`flex items-center ${isExpanded ? 'gap-4' : 'justify-center'} p-3 rounded-2xl hover:bg-white/5 transition-all cursor-pointer group/avatar`}>
-             <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-ios-blue to-ios-purple p-[2px] shadow-lg group-hover/avatar:scale-110 transition-transform">
-                 <div className="h-full w-full rounded-full bg-black flex items-center justify-center overflow-hidden">
-                    <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${avatarSeed}`} alt="Avatar" />
-                 </div>
-             </div>
-             {isExpanded && (
-                 <div className="overflow-hidden">
-                     <p className="text-sm font-black text-white truncate leading-none mb-1">{userName}</p>
-                     <p className="text-[10px] text-ios-blue font-bold truncate tracking-widest uppercase opacity-70">Pro Member</p>
-                 </div>
-             )}
-         </div>
-      </div>
     </motion.aside>
   );
 }

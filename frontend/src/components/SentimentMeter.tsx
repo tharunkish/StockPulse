@@ -11,7 +11,9 @@ export function SentimentMeter({ score, label }: SentimentMeterProps) {
   
   const getColor = () => {
     if (score > 0.15) return '#10b981'; // Bullish - Emerald
+    if (score > 0.05) return '#22c55e'; // Slightly Bullish - Light Green
     if (score < -0.15) return '#f43f5e'; // Bearish - Rose
+    if (score < -0.05) return '#f87171'; // Slightly Bearish - Light Rose
     return '#94a3b8'; // Neutral - Slate
   };
 
@@ -42,8 +44,9 @@ export function SentimentMeter({ score, label }: SentimentMeterProps) {
       </div>
       
       <div className="flex justify-between text-[8px] font-bold text-muted-foreground uppercase tracking-tighter">
-          <span>Extreme Fear</span>
-          <span>Greed</span>
+          <span>BEARISH</span>
+          <span>NEUTRAL</span>
+          <span>BULLISH</span>
       </div>
     </div>
   );
