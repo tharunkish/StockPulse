@@ -6,6 +6,7 @@ import { AllocationPie } from '../AllocationPie';
 import { ReturnBarChart } from '../ReturnBarChart';
 import { PerformanceInsights } from '../PerformanceInsights';
 import { NewsFeed } from '../NewsFeed';
+import { PortfolioSparkline } from '../PortfolioSparkline';
 import { motion } from 'framer-motion';
 import { Activity, Sparkles, TrendingUp } from 'lucide-react';
 
@@ -55,15 +56,11 @@ export function HomeView({ summary, portfolio, prices, onSelectStock }: HomeView
                    <p className="text-muted-foreground font-medium mt-2 max-w-md">Your real-time financial heartbeat, powered by Midnight Quant intelligence.</p>
                </div>
 
-               <div className="text-right group cursor-pointer">
-                   <div className="flex items-center justify-end gap-2 text-muted-foreground mb-1">
-                       <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]" />
-                       <p className="text-[10px] font-black uppercase tracking-widest">Total Net Worth</p>
-                   </div>
-                   <p className="text-6xl font-black font-mono text-white tabular-nums tracking-tighter drop-shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:scale-105 transition-transform duration-500">
-                       {isPrivacyMode ? '••••••••••' : summary.currentValue.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}
-                   </p>
-               </div>
+               <PortfolioSparkline 
+                 data={[]} // Will generate mock data for now
+                 currentValue={summary.currentValue}
+                 isPrivacyMode={isPrivacyMode}
+               />
            </div>
 
            <DashboardOverview summary={summary} />

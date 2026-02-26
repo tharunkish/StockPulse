@@ -108,16 +108,20 @@ export function AllocationPie({ portfolio, prices, onSelect }: AllocationPieProp
         </ResponsiveContainer>
       </div>
 
-       <div className="grid grid-cols-2 gap-2 mt-4 text-xs text-muted-foreground border-t border-border pt-4">
+       <div className="grid grid-cols-2 gap-3 mt-4 text-[12px] font-medium text-white/90 border-t border-white/10 pt-4">
          {data.map((entry, idx) => (
              <div 
                 key={entry.name} 
-                className={`flex items-center gap-2 ${entry.name !== 'Others' ? 'cursor-pointer hover:text-white' : ''}`}
+                className={`flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer group`}
                 onClick={() => onPieClick(entry)}
              >
-                 <div className="h-2 w-2 rounded-full shrink-0" style={{ background: CHART_COLORS[idx % CHART_COLORS.length] }} />
-                 <span className="truncate">{entry.name}</span>
-                 <span className="ml-auto font-mono text-foreground">{((entry.value / data.reduce((a, b) => a + b.value, 0)) * 100).toFixed(0)}%</span>
+                 <div className="h-3 w-3 rounded-full shrink-0 shadow-sm" style={{ background: CHART_COLORS[idx % CHART_COLORS.length] }} />
+                 <div className="flex-1 min-w-0">
+                     <div className="truncate font-semibold">{entry.name}</div>
+                     <div className="text-[10px] text-white/60 font-normal">
+                         {((entry.value / data.reduce((a, b) => a + b.value, 0)) * 100).toFixed(1)}%
+                     </div>
+                 </div>
              </div>
          ))}
       </div>

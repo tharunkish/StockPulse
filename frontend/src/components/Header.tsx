@@ -75,7 +75,7 @@ export function Header({ onSelectStock }: HeaderProps) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search assets, sectors, or insights..." 
-              className="w-full pl-14 pr-6 py-4 rounded-2xl bg-white/[0.03] border border-white/5 text-sm text-white placeholder:text-muted-foreground/40 focus:bg-white/[0.08] focus:border-ios-blue/30 focus:outline-none focus:ring-0 transition-all shadow-2xl"
+              className="w-full pl-14 pr-6 py-4 rounded-2xl bg-[#1A1A2E] border border-white/10 text-sm text-white placeholder:text-muted-foreground/60 focus:bg-[#1A1A2E] focus:border-ios-blue/50 focus:outline-none focus:ring-0 focus:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all shadow-2xl"
           />
           <AnimatePresence>
             {(searchResults.length > 0 || isSearching) && (

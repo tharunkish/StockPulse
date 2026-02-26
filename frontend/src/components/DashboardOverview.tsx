@@ -21,22 +21,19 @@ const Sparkline = ({ isPositive }: { isPositive: boolean }) => (
   </svg>
 );
 
-const StatCard = ({ title, value, change, icon: Icon, isCurrency = false, delay = 0, variant = "blue" }: any) => {
+const StatCard = ({ title, value, change, icon: Icon, isCurrency = false, delay = 0 }: any) => {
   const isPositive = change >= 0;
   const { isPrivacyMode } = useSettings();
 
-  const variantStyles: any = {
-      blue: "from-blue-500/10 to-blue-900/10 border-blue-500/20 shadow-blue-500/5",
-      green: "from-emerald-500/10 to-emerald-900/10 border-emerald-500/20 shadow-emerald-500/5",
-      red: "from-rose-500/10 to-rose-900/10 border-rose-500/20 shadow-rose-500/5",
-      indigo: "from-indigo-500/10 to-indigo-900/10 border-indigo-500/20 shadow-indigo-500/5",
-  };
-
-  const glowStyles: any = {
-      blue: "bg-blue-500",
-      green: "bg-emerald-500",
-      red: "bg-rose-500",
-      indigo: "bg-indigo-500",
+  // Standardized card background with subtle border glow
+  const getCardStyle = () => {
+    const baseStyle = "bg-[#0A0A0A]/80 backdrop-blur-xl border border-white/10";
+    if (isPositive && change !== 0) {
+      return `${baseStyle} border-emerald-500/30 shadow-emerald-500/10`;
+    } else if (!isPositive && change !== 0) {
+      return `${baseStyle} border-rose-500/30 shadow-rose-500/10`;
+    }
+    return baseStyle;
   };
 
   return (
@@ -45,15 +42,12 @@ const StatCard = ({ title, value, change, icon: Icon, isCurrency = false, delay 
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: delay * 0.1 }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      className={`relative overflow-hidden rounded-[32px] p-6 bg-gradient-to-br ${variantStyles[variant]} backdrop-blur-xl border shadow-2xl group`}
+      className={`relative overflow-hidden rounded-[32px] p-6 ${getCardStyle()} shadow-2xl group`}
     >
-      {/* Dynamic Background Glow */}
-      <div className={`absolute -right-10 -top-10 h-32 w-32 rounded-full blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity ${glowStyles[variant]}`} />
-
       {/* Top Row: Title + Icon */}
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center gap-3">
-            <div className={`p-2.5 rounded-2xl bg-white/5 border border-white/10 text-white shadow-inner`}>
+            <div className="p-2.5 rounded-2xl bg-white/5 border border-white/10 text-white shadow-inner">
                 <Icon className="h-5 w-5" />
             </div>
             <span className="text-xs font-bold uppercase tracking-[0.15em] text-white/60">{title}</span>
@@ -96,7 +90,6 @@ export function DashboardOverview({ summary }: DashboardOverviewProps) {
         icon={Wallet}
         isCurrency
         delay={1}
-        variant="indigo"
       />
       <StatCard
         title="Net Profit"
@@ -105,7 +98,6 @@ export function DashboardOverview({ summary }: DashboardOverviewProps) {
         icon={Activity}
         isCurrency
         delay={2}
-        variant={summary.totalPL >= 0 ? "green" : "red"}
       />
       <StatCard
         title="Day's Gain"
@@ -114,7 +106,6 @@ export function DashboardOverview({ summary }: DashboardOverviewProps) {
         icon={TrendingUp}
         isCurrency
         delay={3}
-        variant={summary.dayChange >= 0 ? "green" : "red"}
       />
        <StatCard
         title="Total Invested"
@@ -123,7 +114,6 @@ export function DashboardOverview({ summary }: DashboardOverviewProps) {
         icon={Briefcase}
         isCurrency
         delay={4}
-        variant="blue"
       />
     </div>
   );

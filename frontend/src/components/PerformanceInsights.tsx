@@ -1,7 +1,7 @@
 import { Stock } from '../types';
 import { Quote } from '../services/api';
 import { formatCompactINR } from '../lib/utils';
-import { TrendingDown, Target, Zap } from 'lucide-react';
+import { TrendingDown, Target, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useSettings } from '../context/SettingsContext';
 
@@ -54,13 +54,13 @@ export function PerformanceInsights({ portfolio, prices }: PerformanceInsightsPr
           bg: 'bg-rose-500/10'
       },
       {
-          title: 'Top Mover (1D)',
+          title: mover.dayChangePercent >= 0 ? 'Top Gainer (1D)' : 'Top Loser (1D)',
           ticker: mover.ticker,
-          value: `${mover.dayChangePercent.toFixed(2)}%`,
+          value: `${mover.dayChangePercent >= 0 ? '+' : ''}${mover.dayChangePercent.toFixed(2)}%`,
           sub: 'Day Change',
-          icon: Zap,
-          color: mover.dayChangePercent >= 0 ? 'text-ios-blue' : 'text-rose-400',
-          bg: mover.dayChangePercent >= 0 ? 'bg-ios-blue/10' : 'bg-rose-500/10'
+          icon: mover.dayChangePercent >= 0 ? TrendingUp : TrendingDown,
+          color: mover.dayChangePercent >= 0 ? 'text-emerald-400' : 'text-rose-400',
+          bg: mover.dayChangePercent >= 0 ? 'bg-emerald-500/10' : 'bg-rose-500/10'
       }
   ];
 
