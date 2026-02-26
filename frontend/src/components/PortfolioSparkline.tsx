@@ -4,7 +4,6 @@ import { TrendingUp, TrendingDown } from 'lucide-react';
 interface PortfolioSparklineProps {
   data: Array<{ date: string; value: number }>;
   currentValue: number;
-  isPrivacyMode: boolean;
 }
 
 const CustomTooltip = ({ active, payload }: any) => {
@@ -20,7 +19,7 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
-export function PortfolioSparkline({ data, currentValue, isPrivacyMode }: PortfolioSparklineProps) {
+export function PortfolioSparkline({ data, currentValue }: PortfolioSparklineProps) {
   // Generate mock 7-day data if not provided
   const sparklineData = data.length > 0 ? data : [
     { date: 'Day 1', value: currentValue * 0.95 },

@@ -90,6 +90,7 @@ export function DashboardOverview({ summary }: DashboardOverviewProps) {
         icon={Wallet}
         isCurrency
         delay={1}
+        variant="indigo"
       />
       <StatCard
         title="Net Profit"
@@ -98,6 +99,7 @@ export function DashboardOverview({ summary }: DashboardOverviewProps) {
         icon={Activity}
         isCurrency
         delay={2}
+        variant={summary.totalPL >= 0 ? "green" : "red"}
       />
       <StatCard
         title="Day's Gain"
@@ -106,6 +108,7 @@ export function DashboardOverview({ summary }: DashboardOverviewProps) {
         icon={TrendingUp}
         isCurrency
         delay={3}
+        variant={summary.dayChange >= 0 ? "green" : "red"}
       />
        <StatCard
         title="Total Invested"
@@ -114,6 +117,7 @@ export function DashboardOverview({ summary }: DashboardOverviewProps) {
         icon={Briefcase}
         isCurrency
         delay={4}
+        variant="blue"
       />
     </div>
   );

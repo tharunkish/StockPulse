@@ -10,8 +10,6 @@ import { PortfolioSparkline } from '../PortfolioSparkline';
 import { motion } from 'framer-motion';
 import { Activity, Sparkles, TrendingUp } from 'lucide-react';
 
-import { useSettings } from '../../context/SettingsContext';
-
 interface HomeViewProps {
   summary: PortfolioSummary;
   portfolio: Stock[];
@@ -22,7 +20,6 @@ interface HomeViewProps {
 export function HomeView({ summary, portfolio, prices, onSelectStock }: HomeViewProps) {
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [loadingNews, setLoadingNews] = useState(false);
-  const { isPrivacyMode } = useSettings();
 
   useEffect(() => {
     if (portfolio.length > 0) {
@@ -59,7 +56,6 @@ export function HomeView({ summary, portfolio, prices, onSelectStock }: HomeView
                <PortfolioSparkline 
                  data={[]} // Will generate mock data for now
                  currentValue={summary.currentValue}
-                 isPrivacyMode={isPrivacyMode}
                />
            </div>
 

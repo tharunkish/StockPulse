@@ -66,7 +66,7 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="flex-1 py-8 flex flex-col gap-2 px-2">
-        {links.map((link, index) => {
+        {links.map((link) => {
           const isActive = activeTab === link.id;
           return (
             <button

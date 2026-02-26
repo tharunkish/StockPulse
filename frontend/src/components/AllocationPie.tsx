@@ -119,7 +119,7 @@ export function AllocationPie({ portfolio, prices, onSelect }: AllocationPieProp
                  <div className="flex-1 min-w-0">
                      <div className="truncate font-semibold">{entry.name}</div>
                      <div className="text-[10px] text-white/60 font-normal">
-                         {((entry.value / data.reduce((a, b) => a + b.value, 0)) * 100).toFixed(1)}%
+                         {((entry.value / totalValue) * 100).toFixed(1)}%
                      </div>
                  </div>
              </div>

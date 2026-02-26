@@ -42,15 +42,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   
   const clearAllData = () => {
     if (confirm('Are you sure? This will delete all stocks and reset settings.')) {
-        // Clear portfolio data
-        localStorage.removeItem('stockpulse-portfolio');
-        
-        // Reset settings to defaults
-        localStorage.removeItem('stockpulse-sidebarBehavior');
-        localStorage.removeItem('stockpulse-privacyMode');
-        localStorage.removeItem('stockpulse-refreshInterval');
-        localStorage.removeItem('stockpulse-accentColor');
-        
+        localStorage.clear();
         window.location.reload();
     }
   };
